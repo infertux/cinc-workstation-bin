@@ -1,7 +1,7 @@
 pkgbase = cinc-workstation-bin
 	pkgdesc = The Cinc installation package includes everything you need to start converging your machines.
-	pkgver = 23.12.1055
-	pkgrel = 2
+	pkgver = 24.2.1058
+	pkgrel = 1
 	url = https://cinc.sh/download/
 	arch = x86_64
 	license = Apache
@@ -11,7 +11,7 @@ pkgbase = cinc-workstation-bin
 	conflicts = chef-dk
 	conflicts = chef-client
 	conflicts = cinc
-	source = http://downloads.cinc.sh/files/stable/cinc-workstation/23.12.1055/ubuntu/20.04/cinc-workstation_23.12.1055-1_amd64.deb
-	sha256sums = e11eb18d79c62eb9f8006c48e091b7557774fad974059dfc60f717bda4229d66
+	source = http://downloads.cinc.sh/files/stable/cinc-workstation/24.2.1058/ubuntu/22.04/cinc-workstation_24.2.1058-1_amd64.deb
+	sha256sums = e3578f5f75b825a6db5af681052f8d090d4ea9fff3efae4b4f5e76198f387b12
 
 pkgname = cinc-workstation-bin
