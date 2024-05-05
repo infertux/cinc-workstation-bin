@@ -2,7 +2,7 @@
 # Maintainer: Cedric Felizard <cedric@felizard.fr>
 
 pkgname=cinc-workstation-bin
-pkgver=24.2.1058
+pkgver=24.4.1064
 pkgrel=1
 pkgdesc="The Cinc installation package includes everything you need to start converging your machines."
 arch=('x86_64')
@@ -11,7 +11,7 @@ license=('Apache')
 depends=(libxcrypt-compat)
 conflicts=(chef chef-solo chef-dk chef-client cinc)
 source=("http://downloads.cinc.sh/files/stable/cinc-workstation/${pkgver}/ubuntu/22.04/cinc-workstation_${pkgver}-1_amd64.deb")
-sha256sums=('e3578f5f75b825a6db5af681052f8d090d4ea9fff3efae4b4f5e76198f387b12')
+sha256sums=('4b5e78dcaa23115321e3b69586436ca8b680c9d989aafdbbab11b62d1f4f39cd')
 
 package() {
   cd "$srcdir"
