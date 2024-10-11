@@ -1,5 +1,5 @@
-# Maintainer: Simon Stridsberg <aur@devsn.se>
 # Maintainer: Cedric Felizard <cedric@felizard.fr>
+# Contributor: Simon Stridsberg <aur@devsn.se>
 
 pkgname=cinc-workstation-bin
 pkgver=24.8.1068
