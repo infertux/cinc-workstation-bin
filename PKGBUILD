@@ -1,5 +1,6 @@
 # Maintainer: Cedric Felizard <cedric@felizard.fr>
 # Contributor: Simon Stridsberg <aur@devsn.se>
+# Contributor: kiromantia <aur@dataclast.network>
 
 pkgname=cinc-workstation-bin
 pkgver=25.9.1094
