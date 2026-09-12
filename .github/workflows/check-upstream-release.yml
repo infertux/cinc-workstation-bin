@@ -1,0 +1,49 @@
+name: Check for new upstream release
+
+on:
+  schedule:
+    # Daily at 07:30 UTC. Upstream releases every few weeks at most, so this
+    # has plenty of margin without hammering the mirror.
+    - cron: '30 7 * * *'
+  workflow_dispatch: {}
+
+permissions:
+  issues: write   # to open the notification issue
+
+jobs:
+  check-upstream:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v7
+
+      - name: Read current pkgver from PKGBUILD
+        id: current
+        run: echo "version=$(grep -oP '^pkgver=\K.*' PKGBUILD)" >> "$GITHUB_OUTPUT"
+
+      - name: Fetch latest version from upstream listing
+        id: latest
+        run: |
+          html="$(curl -fsSL https://downloads.cinc.sh/files/stable/cinc-workstation/)"
+          latest="$(grep -oP 'href="\K[0-9]+\.[0-9]+\.[0-9]+(?=/")' <<< "$html" | sort -V | tail -n1)"
+          if [ -z "$latest" ]; then
+            echo "error: couldn't parse any version directory from the upstream listing"
+            exit 1
+          fi
+          echo "version=$latest" >> "$GITHUB_OUTPUT"
+
+      - name: Open an issue if a newer version is available
+        if: steps.current.outputs.version != steps.latest.outputs.version
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CURRENT: ${{ steps.current.outputs.version }}
+          LATEST: ${{ steps.latest.outputs.version }}
+        run: |
+          existing=$(gh issue list --state all --search "$LATEST in:title" --json number --jq 'length')
+          if [ "$existing" -eq 0 ]; then
+            title="cinc-workstation $LATEST released upstream"
+            body=$(printf 'Upstream now has **%s**; `PKGBUILD` currently pins `%s`.\n\nFiles: https://downloads.cinc.sh/files/stable/cinc-workstation/%s/\n\nUpdate `pkgver`, refresh `sha256sums`, bump `pkgrel`, and push to the AUR.' "$LATEST" "$CURRENT" "$LATEST")
+            gh issue create --title "$title" --body "$body"
+          else
+            echo "An issue mentioning $LATEST already exists, skipping."
+          fi
